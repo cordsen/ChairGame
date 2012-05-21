@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Chair Game</title>
+    <link href="/resources/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="/resources/google-code-prettify/prettify.css" rel="stylesheet">
+    <style>
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body onload="prettyPrint();">
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a href="/" class="brand">Chair Game</a>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="hero-unit">
+        <p>You are in a room with a circle of 100 chairs. The chairs are
+        numbered sequentially from 1 to 100.
+        At some point in time, the person in chair #1 will be asked to leave.
+        The person in chair #2 will be skipped, and the person in chair #3 will
+        be asked to leave. This pattern of skipping one person and asking the
+        next to leave will keep going around the circle until there is one
+        person left… the survivor.
+        Write a program to determine which chair the survivor is sitting in.</p>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="span6">
+            <pre class="prettyprint">
+function lastChair(n) {
+  if (isNaN(n) || n < 2 || n % 1 !== 0) {
+    return "use an int > 2";
+  }
+
+  // the pattern is (n - 2^(ceiling(log[2](n)-1)) * 2      
+  // find greatest power or 2 less than the number
+  var p = Math.pow(2, Math.ceil(Math.log(n) / Math.log(2)) - 1);
+
+  return (n - p) * 2;
+}
+            </pre>
+          </div>
+          <div class="span6">
+            <form class="well form-inline">
+              <label>Enter the Number of Chairs </label>
+              <input id="num" type="text" class="span3" value="100">
+            </form>
+            <div class="well">The survivor is in chair: <span id="survivor"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="/resources/google-code-prettify/prettify.js"></script>
+    <script>
+      function lastChair(n) {
+        if (isNaN(n) || n < 2 || n % 1 !== 0) {
+          return "use an int > 2";
+        }
+
+        // the pattern is (n - 2^(ceiling(log[2](n)-1)) * 2      
+        // find greatest power or 2 less than the number
+        var p = Math.pow(2, Math.ceil(Math.log(n) / Math.log(2)) - 1);
+
+        return (n - p) * 2;
+      }
+
+      $('#num').keyup(function() {
+        $("#survivor").html(lastChair($(this).val()));
+      });
+      
+      $('#num').keyup();
+    </script>
+  </body>
+</html>
+
